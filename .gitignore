@@ -7,3 +7,4 @@ client/dist/
 
 .vercel
 .env*.local
+.secrets-monopoly.txt
