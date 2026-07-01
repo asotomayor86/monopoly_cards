@@ -11,7 +11,7 @@ en familia desde el **Hub familiar de juegos**. Mismo stack y arquitectura que *
 
 - **Fase 1 — Acceso + Lobby + Salas + Integración Hub** ✅
 - **Fase 2 — Motor de reglas (baraja de 106 cartas) + tests** ✅ (`npm test` → 34 tests)
-- Fase 3 — UI de partida + tiempo real (pendiente)
+- **Fase 3 — UI de partida + tiempo real (SSE)** ✅
 - Fase 4 — Pulido / responsive (pendiente)
 
 ## Arquitectura
