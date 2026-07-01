@@ -14,13 +14,21 @@ const fallbackHubUrl =
     ? 'https://gamehub.family'
     : 'https://one-page-to-rule-them-all.vercel.app';
 
-const NEON_AUTH_URL =
-  import.meta.env.VITE_NEON_AUTH_URL || `${fallbackHubUrl}/api/auth`;
+// IMPORTANTE: la integración Neon-Vercel de la BD del juego inyecta
+// VITE_NEON_AUTH_URL apuntando al Neon Auth PROPIO de esa BD (cuentas vacías,
+// otro proyecto), lo que provoca "Invalid origin" al loguear. El SSO debe ir
+// SIEMPRE contra el hub (cuentas compartidas), así que ignoramos cualquier valor
+// que apunte a neon.tech y derivamos la URL del hub.
+const hubProxy = (url) => url && !url.includes('neon.tech');
+const NEON_AUTH_URL = hubProxy(import.meta.env.VITE_NEON_AUTH_URL)
+  ? import.meta.env.VITE_NEON_AUTH_URL
+  : `${fallbackHubUrl}/api/auth`;
 
 // URL base del hub (sin el sufijo /api/auth). Se usa para devolver al jugador al
 // hub al terminar un partido de liga.
-export const HUB_URL =
-  import.meta.env.VITE_HUB_URL || NEON_AUTH_URL.replace(/\/api\/auth\/?$/, '');
+export const HUB_URL = hubProxy(import.meta.env.VITE_HUB_URL)
+  ? import.meta.env.VITE_HUB_URL.replace(/\/+$/, '')
+  : NEON_AUTH_URL.replace(/\/api\/auth\/?$/, '');
 
 export const authClient = createAuthClient(NEON_AUTH_URL);
 
