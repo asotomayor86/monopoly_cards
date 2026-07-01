@@ -1,0 +1,4 @@
+{
+  "watch": ["server", "shared"],
+  "ext": "js,json"
+}
